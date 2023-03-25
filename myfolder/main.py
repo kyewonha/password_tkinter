@@ -39,6 +39,8 @@ def generate_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def find_password():
+     #json파일을 열어서 기존 입력값을 확인한다.
+
     website = input1.get()
     try:
         with open('data.json') as data_file:
