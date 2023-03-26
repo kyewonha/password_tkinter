@@ -11,19 +11,29 @@ import random
 #take data and make flash card
 data= pd.read_csv('./data/french_words.csv')
 to_learn = data.to_dict(orient= 'records')
+current_card={}
 
 def next_card():
+    global current_card
+    global flip_timer #변수 설정이유: 카드를 계속 넘겨도 처음의 3초가 지나면 flipcard가 실행되서
+    window.after_cancel(flip_timer)
     current_card = random.choice(to_learn)
-    canvas.itemconfig(word_label1, text='French')
-    canvas.itemconfig(word_label2, text= current_card['French'])
+    canvas.itemconfig(word_label1, text='French', fill='black')
+    canvas.itemconfig(word_label2, text= current_card['French'], fill='black')
+    canvas.itemconfig(front_img, image= background_photo)
+    flip_timer= window.after(3000, flip_card)
 
-
-
+def flip_card():
+    canvas.itemconfig(word_label1, text="English", fill='white')
+    canvas.itemconfig(word_label2, text= current_card['English'], fill='white')
+    canvas.itemconfig(front_img, image= background_ch_photo)
 
 #--ui---------
 window =Tk()
 window.title("flashy")
 window.config(padx=50, pady=50, bg=BACKGROUND_COLOR)
+
+flip_timer= window.after(3000, flip_card)
 
 canvas = Canvas(width=800, height= 540, highlightthickness=0, bg= BACKGROUND_COLOR)
 canvas.pack()
