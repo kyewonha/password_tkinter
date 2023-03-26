@@ -1,17 +1,28 @@
 BACKGROUND_COLOR = "#B1DDC6"
 Font_setting= ("Ariel", 40, 'italic')
 Answer_font_Setting = ("Ariel", 60, 'bold')
+current_card={}
 
 import pandas as pd
 from tkinter import *
 from PIL import Image, ImageTk
 import pandas as pd
 import random
+import os
 
 #take data and make flash card
-data= pd.read_csv('./data/french_words.csv')
-to_learn = data.to_dict(orient= 'records')
-current_card={}
+
+
+
+
+try:
+    learn_csv = pd.read_csv('./data/words_to_learn.csv')
+except FileNotFoundError:
+    original_data= pd.read_csv("./data/french_words.csv")
+    to_learn = original_data.to_dict(orient='records')
+else:
+    to_learn= learn_csv.to_dict(orient='records')
+
 
 def next_card():
     global current_card
@@ -22,6 +33,14 @@ def next_card():
     canvas.itemconfig(word_label2, text= current_card['French'], fill='black')
     canvas.itemconfig(front_img, image= background_photo)
     flip_timer= window.after(3000, flip_card)
+
+def is_known():
+    to_learn.remove(current_card)
+    print(len(to_learn))
+    data= pd.DataFrame(to_learn)
+    data.to_csv('./data/words_to_learn.csv', index=False)
+    next_card()
+
 
 def flip_card():
     canvas.itemconfig(word_label1, text="English", fill='white')
@@ -54,8 +73,9 @@ x_mark.grid(row=1, column=0)
 
 v_pic = Image.open('./images/right.png')
 v_photo = ImageTk.PhotoImage(v_pic)
-v_mark= Button(window, image= v_photo, highlightthickness=0, borderwidth=0, command=next_card)
+v_mark= Button(window, image= v_photo, highlightthickness=0, borderwidth=0, command=is_known)
 v_mark.grid(row=1, column=1)
 
+next_card()
 
 window.mainloop()
