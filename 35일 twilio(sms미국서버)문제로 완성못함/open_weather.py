@@ -1,6 +1,6 @@
 import requests
 #api를 다룰때 requests 모듈을 사용한다.
-
+#twilio 모듈(sms보내기)는 미국 기준이라 적용 못함. 그냥 영상보고 공부만
 lat= 35.8269
 lon= 127.1039
 #appid는 apikey를 홈페이지에서 생성한다.
@@ -34,6 +34,7 @@ will_rain= False
 
 #weather_id 저장하기
 for hour_data in weather_slice:
+    #online json viewer를 통해 print한 json한 파일을 집어넣으면 weather/0/id 등의 위계를 알 수 있다.
     condition_code= hour_data['weather'][0]['id']
     if int(condition_code) <700:
         will_rain = True
