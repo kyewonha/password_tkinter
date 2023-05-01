@@ -11,6 +11,7 @@ PINK = "#e2979c"
 RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
+SKYBLUE = "#91c5f5"
 FONT_NAME = "Courier"
 WORK_MIN = 25 * 60
 SHORT_BREAK_MIN = 5 * 60
@@ -63,13 +64,25 @@ def start_timer():
         long_break_sec = LONG_BREAK_MIN
         if reps % 8 == 0: # 8번 반복하면 길게 휴식하기
             count_down(long_break_sec)
-            title_label.config(text="Break", fg=RED)
+            title_label.config(text="Break", fg=PINK)
+            canvas.configure(bg=YELLOW)
+            window.config(bg=YELLOW)
+            check_marks.config(bg=YELLOW, fg= RED)
+            title_label.config(bg=YELLOW)
         elif reps % 2 == 0: #8의 배수가 아닌 2의 배수에서 이렇게 작동하자.
             count_down(short_break_sec)
             title_label.config(text="Break", fg=PINK)
+            canvas.configure(bg=YELLOW)
+            window.config(bg=YELLOW)
+            check_marks.config(bg=YELLOW, fg= RED)
+            title_label.config(bg=YELLOW)
         else: #나머지는 ~~~~
             count_down(work_sec)
-            title_label.config(text="Work", fg=GREEN)
+            title_label.config(text="Work")
+            canvas.configure(bg=SKYBLUE)
+            window.config(bg=SKYBLUE)
+            check_marks.config(bg=SKYBLUE, fg= RED)
+            title_label.config(bg=SKYBLUE, fg= "#ffffff")
     #pause_timer를 실행후 start버튼을 누를때
     else:
         count_down(remaining_time)
