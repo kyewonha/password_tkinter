@@ -1,7 +1,6 @@
 import requests
 from datetime import datetime
 
-
 # 내 현재 pixela 사이트  ='https://pixe.la/v1/users/kyewonha/graphs/graph1.html'
 pixela_endpoint= "https://pixe.la/v1/users"
 
